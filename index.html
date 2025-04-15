@@ -178,7 +178,15 @@ async function fetchDataForDate(dateStr) {
   window.lastDateFormatted = formattedDate;
 
   try {
-    const tokenResponse = await fetch('https://jttdayeq88.execute-api.us-east-2.amazonaws.com/default/Fetch_zoho_active_token');
+    const tokenResponse = await fetch('https://jttdayeq88.execute-api.us-east-2.amazonaws.com/default/Fetch_zoho_active_token', {
+  method: 'POST',
+  headers: {
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify({
+    requester: "invoice-scraper-widget"  // or anything else you want to send
+  })
+});
     const tokenJson = await tokenResponse.json();
     const accessToken = tokenJson.access_token;
 
