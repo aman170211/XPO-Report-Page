@@ -177,25 +177,12 @@ async function fetchDataForDate(dateStr) {
   const formattedDate = formatDateToZoho(dateStr);
   window.lastDateFormatted = formattedDate;
 
-  try {
-    const tokenResponse = await fetch('https://jttdayeq88.execute-api.us-east-2.amazonaws.com/default/Fetch_zoho_active_token', {
-  method: 'POST',
-  headers: {
-    "Content-Type": "application/json"
-  },
-  body: JSON.stringify({
-    requester: "invoice-scraper-widget"  // or anything else you want to send
-  })
-});
-    const tokenJson = await tokenResponse.json();
-    const accessToken = tokenJson.access_token;
+  const apiUrl = `https://ew0nbf06x1.execute-api.us-east-2.amazonaws.com/XPO_final_Data_fetch?Created_Date=${encodeURIComponent(formattedDate)}`;
 
-    const apiUrl = `https://www.zohoapis.com/creator/v2.1/data/predicata/invoice-scraper/report/XPO_Final_Report?fields=all&Created_Date=${formattedDate}`;
+  try {
     const apiResponse = await fetch(apiUrl, {
-      headers: {
-        "Authorization": `Zoho-oauthtoken ${accessToken}`,
-        "Content-Type": "application/json"
-      }
+      method: "POST",
+      headers: { "Content-Type": "application/json" }
     });
 
     const apiData = await apiResponse.json();
